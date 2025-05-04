@@ -1,0 +1,41 @@
+<!-- homepage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to TriggerStock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: #f8f8f8;
+            padding-top: 100px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #333;
+        }
+        .btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 15px 30px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to TriggerStock</h1>
+    <p>Track live stock movements, set alerts, and receive real-time notifications.</p>
+    
+    <a href="{% url 'login' %}" class="btn">Login</a>
+    <a href="{% url 'register' %}" class="btn">Create Account</a>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<h2>Enter OTP</h2>
+
+{% if messages %}
+  {% for message in messages %}
+    <p style="color:red;">{{ message }}</p>
+  {% endfor %}
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="otp" placeholder="Enter OTP" required />
+    <button type="submit">Verify OTP</button>
+</form>
