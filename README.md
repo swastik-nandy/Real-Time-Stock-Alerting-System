@@ -121,11 +121,11 @@ Real-Time-Stock-Predictor/
 ├── Procfile
 ├── requirements.txt
 └── README.md
+```
 
 ---
-## Screenshots
 
-```bash
+## 📷 Screenshots
 
 ### 🏠 Homepage
 > Clean welcome page with gradient background and responsive UI.
@@ -166,4 +166,3 @@ Real-Time-Stock-Predictor/
 ### ⚙️ Django Server Running in Powershell
 > Local Django server boot confirmation.
 ![Django Powershell](assets/Screenshots/Django server in powershell.png)
-
