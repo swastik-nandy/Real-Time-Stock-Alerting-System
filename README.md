@@ -133,36 +133,36 @@ Real-Time-Stock-Predictor/
 
 ### 🔐 Login Page (Google Auth + Native)
 > Allows users to log in using Google or native credentials.
-![Login](assets/Screenshots/Login Page - Google Auth+native.png)
+![Login](assets/Screenshots/login.png)
 
 ### 📝 Manual Account Registration
 > Standard registration form with validation.
-![Register](assets/Screenshots/Manual Account Registration.png)
+![Register](assets/Screenshots/register.png)
 
 ### 📊 Dashboard View
 > Overview of the user’s stock alerts and account info.
-![Dashboard](assets/Screenshots/Dashboard 1.png)
+![Dashboard](assets/Screenshots/Dashboard1.png)
 
 ### 🔁 Dynamic Stock Price Updating
 > Auto-refreshing live stock prices every few seconds.
-![Live Updating](assets/Screenshots/Dashboard 2 - Dynamic Stock Price Update.png)
+![Live Updating](assets/Screenshots/Dashboard2.png)
 
 ### ➕ Creating a New Stock Alert
 > User creating a new alert with condition (above/below).
-![Create Alert](assets/Screenshots/User creates alert in dashboard.png)
+![Create Alert](assets/Screenshots/create_alert.png)
 
 ### 🔔 Alert Triggering + Mail Sending + Deletion
 > When an alert condition is met, email is sent and alert status updates.
-![Triggered Alert](assets/Screenshots/Alerts - Mail Sending System + delete alert.png)
+![Triggered Alert](assets/Screenshots/alerter.png)
 
 ### 📩 Email Notification via Mailtrap
 > Simulated email preview using Mailtrap for development.
-![Mail Notification](assets/Screenshots/Email notification system using mailtrap.png)
+![Mail Notification](assets/Screenshots/smtp.png)
 
 ### 🔄 Live Stock Price Fetching Script
 > Backend script that updates stock prices in real-time.
-![Fetcher Script](assets/Screenshots/Live Stock Price Fetching.png)
+![Fetcher Script](assets/Screenshots/fetcher.png)
 
 ### ⚙️ Django Server Running in Powershell
 > Local Django server boot confirmation.
-![Django Powershell](assets/Screenshots/Django server in powershell.png)
+![Django Powershell](assets/Screenshots/server.png)
