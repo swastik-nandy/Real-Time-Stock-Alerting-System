@@ -122,8 +122,10 @@ Real-Time-Stock-Predictor/
 ├── requirements.txt
 └── README.md
 
+---
+## Screenshots
 
-## 📸 Screenshots
+```bash
 
 ### 🏠 Homepage
 > Clean welcome page with gradient background and responsive UI.
