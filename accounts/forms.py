@@ -11,7 +11,20 @@ class CustomUserCreationForm(UserCreationForm):
         fields = ['email', 'username', 'full_name', 'password1', 'password2']
 
 class CustomAuthenticationForm(AuthenticationForm):
-    username = forms.EmailField(label='Email')  # Because we use email as login now
+    username = forms.EmailField(
+        label='Email',
+        widget=forms.EmailInput(attrs={
+            'placeholder': 'Enter your email',
+            'class': 'form-control'
+        })
+    )
+    password = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={
+            'placeholder': 'Enter your password',
+            'class': 'form-control'
+        })
+    )
 
 class ForgotPasswordForm(forms.Form):
     email = forms.EmailField()

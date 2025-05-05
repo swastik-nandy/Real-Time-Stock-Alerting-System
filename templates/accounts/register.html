@@ -1,34 +1,133 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+  <meta charset="UTF-8">
+  <title>Register | TriggerStock</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .register-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 15px;
+      font-weight: 500;
+      color: #555;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 20px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .footer-links {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.95em;
+      color: #555;
+    }
+
+    .footer-links a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+
+    @media (min-width: 768px) {
+      .register-container {
+        padding: 50px;
+        border-radius: 12px;
+      }
+      h2 {
+        font-size: 1.75rem;
+      }
+      input, button {
+        padding: 14px;
+        font-size: 17px;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="register-container">
+    <h2>Register</h2>
 
-<h2>Register</h2>
+    <form method="post">
+      {% csrf_token %}
 
-<form method="post">
-    {% csrf_token %}
+      <label for="id_full_name">Full Name:</label>
+      {{ form.full_name }}
 
-    <label for="id_full_name">Full Name:</label><br>
-    {{ form.full_name }}<br><br>
+      <label for="id_email">Email:</label>
+      {{ form.email }}
 
-    <label for="id_email">Email:</label><br>
-    {{ form.email }}<br><br>
+      <label for="id_username">Username:</label>
+      {{ form.username }}
 
-    <label for="id_username">Username:</label><br>
-    {{ form.username }}<br><br>
+      <label for="id_password1">Password:</label>
+      {{ form.password1 }}
 
-    <label for="id_password1">Password:</label><br>
-    {{ form.password1 }}<br><br>
+      <label for="id_password2">Confirm Password:</label>
+      {{ form.password2 }}
 
-    <label for="id_password2">Confirm Password:</label><br>
-    {{ form.password2 }}<br><br>
+      <button type="submit">Register</button>
+    </form>
 
-    <button type="submit">Register</button>
-</form>
-
-<p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
-
+    <div class="footer-links">
+      <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+  </div>
 </body>
 </html>
