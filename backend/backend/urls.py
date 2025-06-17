@@ -4,12 +4,20 @@ from .views import homepage_view
 from django.conf import settings
 from django.conf.urls.static import static
 from stocks.health import ping_view
+from django.http import JsonResponse  
+
+
+def health_check(request):
+    return JsonResponse({"status": "ok"})
 
 urlpatterns = [
     path('', homepage_view),
     path('admin/', admin.site.urls),
 
-    # API routes from your real apps
+
+    path('health/', health_check),  
+
+    # API routes
     path('ping/', ping_view),
     path('api/accounts/', include('accounts.urls')),
     path('api/alerts/', include('alerts.urls')),
