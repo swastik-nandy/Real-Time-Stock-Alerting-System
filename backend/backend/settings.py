@@ -127,3 +127,8 @@ ALERTS_FROM_EMAIL = config('ALERTS_FROM_EMAIL', default='alerts@triggerstock.com
 FRONTEND_URL = config('FRONTEND_URL', default='http://localhost:5173')
 CORS_ALLOWED_ORIGINS = [FRONTEND_URL]
 CORS_ALLOW_CREDENTIALS = True
+
+# API KEYS
+
+FINNHUB_API_KEY = config("FINNHUB_API_KEY")
+
