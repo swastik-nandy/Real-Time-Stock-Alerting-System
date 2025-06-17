@@ -7,14 +7,14 @@ services:
     dockerfilePath: Dockerfile             
     envVars:
       - key: DJANGO_SECRET_KEY
-        fromDatabase: true
+        fromDatabase: "true"
       - key: DB_NAME
-        fromDatabase: true
+        fromDatabase: "true"
       - key: DB_USER
-        fromDatabase: true
+        fromDatabase: "true"
       - key: DB_PASSWORD
-        fromDatabase: true
+        fromDatabase: "true"
       - key: DB_HOST
-        fromDatabase: true
+        fromDatabase: "true"
       - key: DB_PORT
-        fromDatabase: true
+        fromDatabase: "true"
