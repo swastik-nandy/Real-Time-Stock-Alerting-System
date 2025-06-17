@@ -1,21 +1,26 @@
 FROM python:3.11-slim
 
-# Set workdir
+# Set working directory
 WORKDIR /app
 
-# Copy all project files
+# Copy all files into the image
 COPY . .
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --upgrade pip && \
-    pip install -r requirements.txt
+    pip install -r requirements.txt && \
+    pip install gunicorn  # ✅ Add this if not in requirements.txt
 
 # Install supervisord
-RUN apt-get update && apt-get install -y supervisor
+RUN apt-get update && \
+    apt-get install -y supervisor && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Expose port
+# Make sure start.sh is executable
+RUN chmod +x /app/backend/start.sh
+
+# Expose the port Render will use
 EXPOSE 8000
 
-
-# Start all services with supervisord
+# Start all services via supervisord
 CMD ["supervisord", "-c", "/app/supervisord.conf"]
