@@ -17,7 +17,7 @@ RUN apt-get update && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Make sure start.sh is executable
-RUN chmod +x /app/backend/start.sh
+RUN chmod +x /app/start.sh
 
 # Expose the port Render will use
 EXPOSE 8000
