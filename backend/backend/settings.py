@@ -122,3 +122,8 @@ CORS_ALLOW_CREDENTIALS = True
 # Custom email constants
 OTP_FROM_EMAIL = 'noreply@triggerstock.com'
 ALERTS_FROM_EMAIL = 'alerts@triggerstock.com'
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
