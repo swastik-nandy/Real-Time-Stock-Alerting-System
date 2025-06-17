@@ -2,18 +2,15 @@ import time
 import os
 import sys
 import django
-from dotenv import load_dotenv
 from pathlib import Path
 from django.core.mail import send_mail
+from django.conf import settings  # ✅ Use constants from settings.py
 
 # === SETUP ===
 
-# Load environment variables
+# Setup base directory and Django environment
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.append(str(BASE_DIR))
-load_dotenv(dotenv_path=BASE_DIR / ".env")
-
-# Setup Django environment
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 django.setup()
 
@@ -21,7 +18,6 @@ django.setup()
 
 from alerts.models import Alert
 from django.utils import timezone
-
 
 # === ALERT CHECKER LOOP ===
 
@@ -50,7 +46,7 @@ def check_and_notify_alerts():
                 send_mail(
                     subject,
                     message,
-                    os.getenv("ALERTS_FROM_EMAIL"),
+                    settings.ALERTS_FROM_EMAIL,  # ✅ safe dynamic config
                     [user.email],
                     fail_silently=True,
                 )
@@ -64,7 +60,13 @@ def check_and_notify_alerts():
 
         time.sleep(1)
 
-
 # === ENTRY POINT ===
+
 if __name__ == "__main__":
-    check_and_notify_alerts()
+    try:
+        print("⚙️ Alerter starting...")
+        check_and_notify_alerts()
+    except Exception as e:
+        import traceback
+        print("🔥 Alerter crashed:", str(e))
+        traceback.print_exc()
