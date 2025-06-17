@@ -19,8 +19,6 @@ RUN apt-get update && \
 # Make sure start.sh is executable
 RUN chmod +x /app/start.sh
 
-# Expose the port Render will use
-EXPOSE 8000
 
 # Start all services via supervisord
 CMD ["supervisord", "-c", "/app/supervisord.conf"]
