@@ -16,8 +16,6 @@ RUN apt-get update && apt-get install -y supervisor
 # Expose port
 EXPOSE 8000
 
-# Collect static files (optional)
-RUN python manage.py collectstatic --noinput
 
 # Start all services with supervisord
 CMD ["supervisord", "-c", "/app/supervisord.conf"]

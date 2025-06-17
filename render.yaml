@@ -3,18 +3,64 @@ services:
     name: stock-backend
     env: docker
     plan: free
-    dockerContext: ./backend           
-    dockerfilePath: Dockerfile             
+    dockerContext: ./backend
+    dockerfilePath: Dockerfile
     envVars:
+      # 🔐 Auto-generate a Django secret key
       - key: DJANGO_SECRET_KEY
-        fromDatabase: "true"
+        generateValue: true
+
+      # 🔌 From Render PostgreSQL (change `your-db-name` to actual DB name in Render)
       - key: DB_NAME
-        fromDatabase: "true"
+        fromDatabase:
+          name: your-db-name
+          property: name
+
       - key: DB_USER
-        fromDatabase: "true"
+        fromDatabase:
+          name: your-db-name
+          property: user
+
       - key: DB_PASSWORD
-        fromDatabase: "true"
+        fromDatabase:
+          name: your-db-name
+          property: password
+
       - key: DB_HOST
-        fromDatabase: "true"
+        fromDatabase:
+          name: your-db-name
+          property: host
+
       - key: DB_PORT
-        fromDatabase: "true"
+        fromDatabase:
+          name: your-db-name
+          property: port
+
+      # 🔐 Other secrets (add these in Render UI manually)
+      - key: FINNHUB_API_KEY
+        fromSecret: FINNHUB_API_KEY
+
+      - key: EMAIL_HOST_USER
+        fromSecret: EMAIL_HOST_USER
+      - key: EMAIL_HOST_PASSWORD
+        fromSecret: EMAIL_HOST_PASSWORD
+      - key: GOOGLE_CLIENT_ID
+        fromSecret: GOOGLE_CLIENT_ID
+      - key: GOOGLE_CLIENT_SECRET
+        fromSecret: GOOGLE_CLIENT_SECRET
+
+      - key: ALERT_FROM_EMAIL
+        fromSecret: ALERT_FROM_EMAIL
+      - key: OTP_FROM_EMAIL
+        fromSecret: OTP_FROM_EMAIL
+
+      - key: FRONTEND_URL
+        fromSecret: FRONTEND_URL
+      - key: ALLOWED_HOSTS
+        fromSecret: ALLOWED_HOSTS
+      - key: DEBUG
+        fromSecret: DEBUG
+
+    preDeployCommand: |
+      python manage.py collectstatic --noinput
+      python manage.py migrate
