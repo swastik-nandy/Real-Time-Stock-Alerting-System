@@ -36,7 +36,7 @@ DB_PORT = settings.DATABASES['default']['PORT']
 # === Store Price History ===
 def store_price_history_if_market_open(symbol, price):
     current_time = datetime.now().time()
-    if dtime(8, 0, 0) <= current_time <= dtime(16, 0, 0):
+    if dtime(13, 0, 0) <= current_time <= dtime(21, 0, 0):
         try:
             stock = Stock.objects.get(symbol=symbol)
             StockPriceHistory.objects.create(stock=stock, price=price)
@@ -114,12 +114,12 @@ def start_stock_price_fetcher():
             now_time = datetime.now()
             current_time = now_time.time()
 
-            # === Auto-clear at 12:00 AM ===
-            if current_time.hour == 0 and current_time.minute == 0:
+            # === Auto-clear at 5:00 PM evening in IST ===
+            if current_time.hour == 12 and current_time.minute == 30:
                 today = now_time.date()
                 if last_cleared_date != today:
                     StockPriceHistory.objects.all().delete()
-                    logging.info("🧹 Cleared StockPriceHistory at 12:00 AM")
+                    logging.info("🧹 Cleared StockPriceHistory at 12:30 PM UTC")
                     last_cleared_date = today
 
             # === Fetch stock prices ===
