@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 from datetime import time as dtime, datetime
 from django.utils.timezone import now
-from django.conf import settings  
+from django.conf import settings
 
 # === Logger Setup ===
 logging.basicConfig(
@@ -36,7 +36,7 @@ DB_PORT = settings.DATABASES['default']['PORT']
 # === Store Price History ===
 def store_price_history_if_market_open(symbol, price):
     current_time = datetime.now().time()
-    if dtime(9, 32, 0) <= current_time <= dtime(9, 32, 40):  
+    if dtime(8, 0, 0) <= current_time <= dtime(16, 0, 0):
         try:
             stock = Stock.objects.get(symbol=symbol)
             StockPriceHistory.objects.create(stock=stock, price=price)
@@ -90,9 +90,10 @@ def update_latest_price(stock_symbol, new_price):
 # === API Fetcher ===
 def fetch_stock_price(symbol, max_retries=3, wait_seconds=2):
     url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_API_KEY}'
+    headers = {'User-Agent': 'StockFetcherBot/1.0'}
     for attempt in range(1, max_retries + 1):
         try:
-            response = requests.get(url, timeout=5)
+            response = requests.get(url, headers=headers, timeout=5)
             response.raise_for_status()
             data = response.json()
             return data.get('c')
@@ -104,10 +105,24 @@ def fetch_stock_price(symbol, max_retries=3, wait_seconds=2):
                 logging.error(f"Failed to fetch {symbol} after {max_retries} attempts.")
                 return None
 
-# === Main Loop ===
+# === Main Loop with midnight auto-clear ===
 def start_stock_price_fetcher():
+    last_cleared_date = None
+
     while True:
         try:
+            now_time = datetime.now()
+            current_time = now_time.time()
+
+            # === Auto-clear at 12:00 AM ===
+            if current_time.hour == 0 and current_time.minute == 0:
+                today = now_time.date()
+                if last_cleared_date != today:
+                    StockPriceHistory.objects.all().delete()
+                    logging.info("🧹 Cleared StockPriceHistory at 12:00 AM")
+                    last_cleared_date = today
+
+            # === Fetch stock prices ===
             logging.info("📡 Fetching latest stock prices...")
             stock_symbols = get_all_stocks()
             rows_added = 0
@@ -120,14 +135,15 @@ def start_stock_price_fetcher():
                     if price is not None:
                         update_latest_price(symbol, price)
                         rows_added += store_price_history_if_market_open(symbol, price)
-                        logging.info(f"💾 {symbol} updated to {price}")
+                        logging.info(f"💾 {symbol} updated to {price} at {now_time.strftime('%H:%M:%S')}")
 
             if rows_added > 0:
-                logging.info(f"✅ Total rows added to StockPriceHistory this cycle: {rows_added}")
+                logging.info(f"✅ Total rows added this cycle: {rows_added}")
             else:
-                logging.info("ℹ️ No rows added to StockPriceHistory this cycle.")
+                logging.info("ℹ️ No rows added this cycle.")
 
             time.sleep(10)
+
         except Exception as e:
             logging.error(f"🔥 Unhandled fetcher error: {e}")
             import traceback
